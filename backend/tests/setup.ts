@@ -1,16 +1,14 @@
 // Jest setup file
-beforeAll(async () => {
-  // Setup test database if needed
-});
 
-afterAll(async () => {
-  // Cleanup test database if needed
-});
+// Mock uuid module to avoid ES module issues and provide unique IDs
+let mockCounter = 0;
+jest.mock('uuid', () => ({
+  v4: () => `mocked-uuid-${++mockCounter}`
+}));
 
-beforeEach(() => {
-  // Clear any test data before each test
-});
+// Set test environment
+process.env.NODE_ENV = 'test';
+process.env.JWT_SECRET = 'test-jwt-secret';
 
-afterEach(() => {
-  // Cleanup after each test
-});
+// Increase timeout for database operations
+jest.setTimeout(10000);

@@ -1,0 +1,2 @@
+This is a test document for invalid file type testing.
+It should be rejected when trying to upload as an image file.

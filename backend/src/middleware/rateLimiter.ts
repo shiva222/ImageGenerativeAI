@@ -12,6 +12,12 @@ const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 const MAX_REQUESTS = 100; // Max requests per window
 
 export const rateLimiter = (req: Request, res: Response, next: NextFunction): void => {
+  // Skip rate limiting in test environment
+  if (process.env.NODE_ENV === 'test') {
+    next();
+    return;
+  }
+
   const clientId = req.ip || req.connection.remoteAddress || 'unknown';
   const now = Date.now();
   

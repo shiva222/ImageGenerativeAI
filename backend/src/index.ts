@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3001;
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
   credentials: true,
 }));
 
@@ -48,18 +48,27 @@ app.use(errorHandler);
 const startServer = async () => {
   try {
     await initializeDatabase();
-    console.log('Database initialized successfully');
+    if (process.env.NODE_ENV !== 'test') {
+      console.log('Database initialized successfully');
+    }
     
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-      console.log(`Health check: http://localhost:${PORT}/health`);
+      if (process.env.NODE_ENV !== 'test') {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`Health check: http://localhost:${PORT}/health`);
+      }
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
+    if (process.env.NODE_ENV !== 'test') {
+      console.error('Failed to start server:', error);
+    }
     process.exit(1);
   }
 };
 
-startServer().catch(console.error);
+// Only start server if this file is run directly (not imported by tests)
+if (require.main === module) {
+  startServer().catch(console.error);
+}
 
 export default app;

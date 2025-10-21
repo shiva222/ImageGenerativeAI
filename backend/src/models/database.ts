@@ -12,7 +12,9 @@ export const initializeDatabase = (): Promise<void> => {
         reject(err);
         return;
       }
-      console.log('Connected to SQLite database');
+      if (process.env.NODE_ENV !== 'test') {
+        console.log('Connected to SQLite database');
+      }
       
       // Create tables
       createTables()
@@ -85,7 +87,9 @@ export const closeDatabase = (): Promise<void> => {
         reject(err);
         return;
       }
+      if (process.env.NODE_ENV !== 'test') {
       console.log('Database connection closed');
+    }
       resolve();
     });
   });

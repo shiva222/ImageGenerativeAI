@@ -28,7 +28,7 @@ export const getGenerationsSchema = z.object({
 });
 
 // File validation
-export const validateImageFile = (file: Express.Multer.File): string | null => {
+export const validateImageFile = (file: { mimetype: string; size: number }): string | null => {
   const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
   const maxSize = 10 * 1024 * 1024; // 10MB
 

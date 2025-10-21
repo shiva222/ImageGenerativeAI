@@ -1,10 +1,13 @@
-module.exports = {
-  preset: 'ts-jest',
+export default {
+  preset: 'ts-jest/presets/default-esm',
+  extensionsToTreatAsEsm: ['.ts'],
   testEnvironment: 'node',
   roots: ['<rootDir>/tests'],
   testMatch: ['**/tests/**/*.test.ts'],
   transform: {
-    '^.+\\.ts$': ['ts-jest', { useESM: false }],
+    '^.+\\.ts$': ['ts-jest', {
+      useESM: true
+    }],
   },
   collectCoverageFrom: [
     'src/**/*.ts',
@@ -15,7 +18,4 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
   moduleFileExtensions: ['ts', 'js', 'json'],
   testTimeout: 10000,
-  moduleNameMapper: {
-    '^uuid$': require.resolve('uuid'),
-  },
 };

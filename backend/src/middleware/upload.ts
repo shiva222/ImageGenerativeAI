@@ -2,6 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
+import { Request } from 'express';
 
 // Ensure uploads directory exists
 const uploadsDir = path.join(__dirname, '../../uploads');
@@ -19,7 +20,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+const fileFilter = (req: Request, file: any, cb: multer.FileFilterCallback) => {
   const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
   
   if (allowedTypes.includes(file.mimetype)) {

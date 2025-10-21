@@ -29,7 +29,7 @@ const History: React.FC = () => {
     }
   };
 
-  const handleRestore = (generation: Generation) => {
+  const handleRestore = (_generation: Generation) => {
     // For the history page, we'll show a toast-like notification
     const notification = document.createElement('div');
     notification.className = 'fixed top-4 right-4 bg-primary-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-slideIn';

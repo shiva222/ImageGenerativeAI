@@ -19,10 +19,10 @@ export class AppError extends Error implements ApiError {
 }
 
 export const errorHandler = (
-  err: any,
+  err: Error & { statusCode?: number; name?: string },
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ): void => {
   let statusCode = err.statusCode || 500;
   let message = err.message;
@@ -85,6 +85,8 @@ export const errorHandler = (
   });
 };
 
-export const asyncHandler = (fn: Function) => (req: Request, res: Response, next: NextFunction) => {
+type AsyncRouteHandler = (req: Request, res: Response, next: NextFunction) => Promise<void>;
+
+export const asyncHandler = (fn: AsyncRouteHandler) => (req: Request, res: Response, next: NextFunction) => {
   Promise.resolve(fn(req, res, next)).catch(next);
 };

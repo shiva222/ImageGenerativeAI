@@ -31,7 +31,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           // Verify token is still valid
           const response = await apiService.getCurrentUser();
           setUser(response.data.user);
-        } catch (error) {
+        } catch {
           // Token is invalid, clear storage
           localStorage.removeItem('token');
           localStorage.removeItem('user');

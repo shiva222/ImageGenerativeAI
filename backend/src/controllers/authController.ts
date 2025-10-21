@@ -78,13 +78,13 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const me = asyncHandler(async (req: Request, res: Response) => {
-  const userId = (req as any).user?.id;
+  const userId = (req as Request & { user?: { id: string } }).user?.id;
   
   if (!userId) {
     throw new AppError('User not authenticated', 401);
   }
 
-  const user = await UserModel.findById(userId);
+  const user = await UserModel.findById(Number(userId));
 
   res.status(200).json({
     success: true,
